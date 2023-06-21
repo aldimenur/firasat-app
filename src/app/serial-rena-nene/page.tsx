@@ -55,9 +55,7 @@ function index() {
             >
               <Formik
                 initialValues={{ judul: cardJudul, karakter: "", dubber: "" }}
-                onSubmit={(e) => {
-                  setForm(...form, "");
-                }}
+                onSubmit={(e) => {}}
               >
                 {({ values, handleChange }) => (
                   <div className="flex flex-col py-2 gap-2">
