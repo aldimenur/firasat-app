@@ -9,9 +9,11 @@ export default function Home() {
         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
           GoDuplo TV
         </button>
-        <button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded">
-          <Link href={"/serial-rena-nene"}>Serial Rena Nene</Link>
-        </button>
+        <Link href={"/serial-rena-nene"}>
+          <button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded">
+            Serial Rena Nene
+          </button>
+        </Link>
       </div>
     </main>
   );

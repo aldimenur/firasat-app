@@ -146,9 +146,11 @@ function index() {
         <button className="bg-purple-300 text-black uppercase px-4 py-1 rounded-md hover:bg-purple-400">
           Simpan Semua
         </button>
-        <button className="bg-red-500 uppercase px-4 py-1 rounded-md hover:bg-red-800 font-bold">
-          <Link href={"/"}>Kembali</Link>
-        </button>
+        <Link href={"/"}>
+          <button className="bg-red-500 uppercase px-4 py-1 rounded-md hover:bg-red-800 font-bold">
+            Kembali
+          </button>
+        </Link>
       </main>
     </>
   );
