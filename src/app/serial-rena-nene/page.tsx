@@ -74,7 +74,7 @@ function index() {
       .catch((err) => console.log(err));
   };
 
-  console.log(form);
+  // console.log(form);
 
   return (
     <>
@@ -103,13 +103,32 @@ function index() {
               <Formik
                 initialValues={{
                   title: data.title,
-                  description: "",
-                  dubber: "",
+                  description: data.description,
+                  dubber: data.dubber,
+                  enabled: data.enabled,
                 }}
                 onSubmit={(e) => {}}
               >
                 {({ values, handleChange }) => (
                   <div className="flex flex-col py-2 gap-2">
+                    <button
+                      type="submit"
+                      className="bg-purple-300 text-black uppercase px-4 py-1 rounded-md hover:bg-purple-400"
+                      onClick={() => {
+                        UpdateTodos(data._id, {
+                          title: values.title,
+                          dubber: [
+                            {
+                              name: values.dubber.name,
+                              voice: values.dubber.voice,
+                            },
+                          ],
+                        });
+                        console.log(values.dubber);
+                      }}
+                    >
+                      Simpan
+                    </button>
                     <div>
                       <h5 className="text-2xl font-bold text-center text-black">
                         Judul
@@ -122,17 +141,6 @@ function index() {
                           value={values.title}
                           onChange={handleChange}
                         />
-                        <button
-                          type="submit"
-                          className="bg-purple-300 text-black uppercase px-4 py-1 rounded-md hover:bg-purple-400"
-                          onClick={() => {
-                            UpdateTodos(data._id, {
-                              title: values.title,
-                            });
-                          }}
-                        >
-                          Simpan
-                        </button>
                       </div>
                     </div>
                     <div>
@@ -153,11 +161,11 @@ function index() {
                                 className="px-2 py-1 rounded-md border text-black h-10"
                                 placeholder="Karakter"
                                 name="karakter"
-                                value={values.karakter}
+                                value={values.dubber[i].name}
                                 onChange={handleChange}
                               />
                             </div>
-                            {/* <div>
+                            <div>
                               <h5 className="text-md font-bold text-center text-black">
                                 Dubber {i + 1}
                               </h5>
@@ -165,10 +173,10 @@ function index() {
                                 className="px-2 py-1 rounded-md border text-black h-10"
                                 placeholder="Dubber"
                                 name="dubber"
-                                value={values.dubber}
+                                value={values.dubber[i].voice}
                                 onChange={handleChange}
                               />
-                              <select
+                              {/* <select
                                 className="px-2 py-1 rounded-md border text-black h-10"
                                 onChange={(value) => {
                                   if (value.target.value === "Tambah") {
@@ -182,8 +190,8 @@ function index() {
                                 <option value="Yusuf">Yusuf</option>
                                 <option value="Sakinah">Sakinah</option>
                                 <option value="Tambah">Tambah</option>
-                              </select>
-                            </div> */}
+                              </select> */}
+                            </div>
                           </div>
                         ))}
                         <div className="flex justify-center gap-2">
