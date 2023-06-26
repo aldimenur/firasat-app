@@ -5,8 +5,6 @@ import { Formik } from "formik";
 import Link from "next/link";
 import { useEffect, useLayoutEffect, useState } from "react";
 
-const API_BASE = "http://localhost:5000";
-
 function index() {
   const [cardRow, setCardRow] = useState(1);
   const [cardJudul, setCardJudul] = useState("");
@@ -15,97 +13,50 @@ function index() {
   const [dubber, setDubber] = useState("");
   const [showModal, setShowModal] = useState(false);
 
-  // useLayoutEffect(() => {
-  //   if (sessionStorage.getItem("state")) {
-  //     setCardRow(Number(sessionStorage.getItem("state")));
-  //   } else {
-  //     sessionStorage.setItem("state", cardRow.toString());
-  //   }
-  // }, []);
-
-  // useLayoutEffect(() => {
-  //   setCardJudul(String(sessionStorage.getItem("judul")));
-  // }, []);
-
-  // useEffect(() => {
-  //   sessionStorage.setItem("state", cardRow.toString());
-  // }, [cardRow]);
-
-  useEffect(() => {
-    GetTodos();
+  useLayoutEffect(() => {
+    if (sessionStorage.getItem("state")) {
+      setCardRow(Number(sessionStorage.getItem("state")));
+    } else {
+      sessionStorage.setItem("state", cardRow.toString());
+    }
   }, []);
 
-  const GetTodos = () => {
-    fetch(API_BASE + "/todos")
-      .then((res) => res.json())
-      .then((data) => setForm(data))
-      .catch((err) => console.log(err));
-  };
+  useLayoutEffect(() => {
+    setCardJudul(String(sessionStorage.getItem("judul")));
+  }, []);
 
-  const PostTodos = (data: any) => {
-    fetch(API_BASE + "/todo/new", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then(GetTodos)
-      .catch((err) => console.log(err));
-  };
-
-  const DeleteTodos = (id: any) => {
-    fetch(API_BASE + "/todo/delete/" + id, {
-      method: "DELETE",
-    })
-      .then(GetTodos)
-      .catch((err) => console.log(err));
-  };
-
-  const UpdateTodos = (id: any, data: any) => {
-    fetch(API_BASE + "/todo/update/" + id, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then(GetTodos)
-      .catch((err) => console.log(err));
-  };
-
-  console.log(form);
+  useEffect(() => {
+    sessionStorage.setItem("state", cardRow.toString());
+  }, [cardRow]);
 
   return (
     <>
       <main className="flex min-h-screen flex-col items-center gap-4 p-24">
-        <h2 className="text-4xl font-bold text-center">Serial Rena Nene</h2>
+        <h2 className="text-4xl font-bold text-center">GoDuplo TV</h2>
         <div className="flex gap-4">
           <button
             className="bg-purple-300 text-black uppercase px-4 py-1 rounded-md hover:bg-purple-400"
-            onClick={() => PostTodos({ title: "Judul Baru" })}
+            onClick={() => setCardRow(cardRow + 1)}
           >
             Tambah
           </button>
+          <button
+            className="bg-purple-300 text-black uppercase px-4 py-1 rounded-md hover:bg-purple-400"
+            onClick={() => {
+              if (cardRow > 1) setCardRow(cardRow - 1);
+            }}
+          >
+            Kurang
+          </button>
         </div>
         <div className="h-full w-full flex gap-4 overflow-x-scroll ">
-          {form.map((data, i) => (
+          {Array.from({ length: cardRow }).map((_, i) => (
             <div
               className="min-h-[400px] min-w-[500px] items-center justify-center bg-white rounded-md"
               key={i}
             >
-              <button
-                className="bg-red-500 text-white uppercase px-4 py-1 rounded-md hover:bg-red-700"
-                onClick={() => DeleteTodos(data._id)}
-              >
-                Hapus
-              </button>
               <Formik
-                initialValues={{
-                  title: data.title,
-                  description: "",
-                  dubber: "",
-                }}
+                initialValues={{ judul: cardJudul, karakter: "", dubber: "" }}
                 onSubmit={(e) => {}}
               >
                 {({ values, handleChange }) => (
@@ -118,17 +69,15 @@ function index() {
                         <input
                           className="px-2 py-1 rounded-md border text-black"
                           placeholder="Ketik Judul Disini"
-                          name="title"
-                          value={values.title}
+                          name="judul"
+                          value={values.judul}
                           onChange={handleChange}
                         />
                         <button
                           type="submit"
                           className="bg-purple-300 text-black uppercase px-4 py-1 rounded-md hover:bg-purple-400"
                           onClick={() => {
-                            UpdateTodos(data._id, {
-                              title: values.title,
-                            });
+                            sessionStorage.setItem("judul", values.judul);
                           }}
                         >
                           Simpan
@@ -140,7 +89,7 @@ function index() {
                         Dubber dan Karakter
                       </h5>
                       <div className="flex flex-col gap-2">
-                        {data.dubber.map((e, i) => (
+                        {Array.from({ length: characterCount }).map((_, i) => (
                           <div
                             className="flex gap-2 justify-center px-4"
                             key={i}
@@ -157,7 +106,7 @@ function index() {
                                 onChange={handleChange}
                               />
                             </div>
-                            {/* <div>
+                            <div>
                               <h5 className="text-md font-bold text-center text-black">
                                 Dubber {i + 1}
                               </h5>
@@ -183,7 +132,7 @@ function index() {
                                 <option value="Sakinah">Sakinah</option>
                                 <option value="Tambah">Tambah</option>
                               </select>
-                            </div> */}
+                            </div>
                           </div>
                         ))}
                         <div className="flex justify-center gap-2">
