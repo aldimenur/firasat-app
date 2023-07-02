@@ -109,7 +109,7 @@ function index() {
                 }}
                 onSubmit={(e) => {}}
               >
-                {({ values, handleChange }) => (
+                {({ values, handleChange, setFieldValue }) => (
                   <div className="flex flex-col py-2 gap-2">
                     <button
                       type="submit"
@@ -117,14 +117,9 @@ function index() {
                       onClick={() => {
                         UpdateTodos(data._id, {
                           title: values.title,
-                          dubber: [
-                            {
-                              name: values.dubber.name,
-                              voice: values.dubber.voice,
-                            },
-                          ],
+                          dubber: values.dubber,
                         });
-                        console.log(values.dubber);
+                        console.log(values);
                       }}
                     >
                       Simpan
@@ -148,7 +143,8 @@ function index() {
                         Dubber dan Karakter
                       </h5>
                       <div className="flex flex-col gap-2">
-                        {data.dubber.map((e, i) => (
+                        {console.log(values.dubber)}
+                        {values.dubber.map((e, i) => (
                           <div
                             className="flex gap-2 justify-center px-4"
                             key={i}
@@ -160,7 +156,7 @@ function index() {
                               <input
                                 className="px-2 py-1 rounded-md border text-black h-10"
                                 placeholder="Karakter"
-                                name="karakter"
+                                name={`dubber[${i}].name`}
                                 value={values.dubber[i].name}
                                 onChange={handleChange}
                               />
@@ -172,7 +168,7 @@ function index() {
                               <input
                                 className="px-2 py-1 rounded-md border text-black h-10"
                                 placeholder="Dubber"
-                                name="dubber"
+                                name={`dubber[${i}].voice`}
                                 value={values.dubber[i].voice}
                                 onChange={handleChange}
                               />
@@ -213,8 +209,13 @@ function index() {
                             type="button"
                             className="bg-green-500 uppercase w-[32px] h-[32px] rounded-full hover:bg-green-700 text-center text-xl "
                             onClick={() => {
-                              if (characterCount >= 1)
+                              if (values.dubber.length < 5) {
+                                setFieldValue("dubber", [
+                                  ...values.dubber,
+                                  { name: "", voice: "" },
+                                ]);
                                 setCharacterCount(characterCount + 1);
+                              }
                             }}
                           >
                             +
