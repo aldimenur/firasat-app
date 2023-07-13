@@ -1,6 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client";
+import QuillEditor from "@/components/quillEditor";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { Formik } from "formik";
 import Link from "next/link";
 import { useEffect, useLayoutEffect, useState } from "react";
@@ -8,12 +11,11 @@ import { useEffect, useLayoutEffect, useState } from "react";
 const API_BASE = "http://localhost:5000";
 
 function index() {
-  const [cardRow, setCardRow] = useState(1);
-  const [cardJudul, setCardJudul] = useState("");
   const [form, setForm] = useState([]);
   const [characterCount, setCharacterCount] = useState(1);
   const [dubber, setDubber] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [tempData, setTempData] = useState();
 
   // useLayoutEffect(() => {
   //   if (sessionStorage.getItem("state")) {
@@ -74,11 +76,9 @@ function index() {
       .catch((err) => console.log(err));
   };
 
-  // console.log(form);
-
   return (
     <>
-      <main className="flex min-h-screen flex-col items-center gap-4 p-24">
+      <main className="flex min-h-screen flex-col items-center gap-4 lg:p-24 p-4">
         <h2 className="text-4xl font-bold text-center">Serial Rena Nene</h2>
         <div className="flex gap-4">
           <button
@@ -91,7 +91,7 @@ function index() {
         <div className="h-full w-full flex gap-4 overflow-x-scroll ">
           {form.map((data, i) => (
             <div
-              className="min-h-[400px] min-w-[500px] items-center justify-center bg-white rounded-md"
+              className="min-h-[400px] h-fit lg:min-h-[400px] lg:max-w-[300px]  min-w-[100%] lg:min-w-[500px] items-center justify-center bg-white rounded-md"
               key={i}
             >
               <button
@@ -106,10 +106,11 @@ function index() {
                   description: data.description,
                   dubber: data.dubber,
                   enabled: data.enabled,
+                  script: data.script,
                 }}
                 onSubmit={(e) => {}}
               >
-                {({ values, handleChange, setFieldValue }) => (
+                {({ values, setFieldValue }) => (
                   <div className="flex flex-col py-2 gap-2">
                     <button
                       type="submit"
@@ -118,8 +119,8 @@ function index() {
                         UpdateTodos(data._id, {
                           title: values.title,
                           dubber: values.dubber,
+                          script: values.script,
                         });
-                        console.log(values);
                       }}
                     >
                       Simpan
@@ -128,49 +129,95 @@ function index() {
                       <h5 className="text-2xl font-bold text-center text-black">
                         Judul
                       </h5>
-                      <div className="flex gap-2 justify-center">
+                      <div className="flex gap-2 justify-center px-4">
                         <input
-                          className="px-2 py-1 rounded-md border text-black"
+                          className="px-2 py-1 rounded-md border text-black w-full"
                           placeholder="Ketik Judul Disini"
                           name="title"
                           value={values.title}
-                          onChange={handleChange}
+                          onChange={(value) => {
+                            setFieldValue("title", value.target.value);
+                          }}
+                          onBlur={() => {
+                            UpdateTodos(data._id, {
+                              title: values.title,
+                            });
+                          }}
                         />
                       </div>
                     </div>
+                    <br />
                     <div>
                       <h5 className="text-2xl font-bold text-center text-black">
                         Dubber dan Karakter
                       </h5>
                       <div className="flex flex-col gap-2">
-                        {console.log(values.dubber)}
                         {values.dubber.map((e, i) => (
                           <div
-                            className="flex gap-2 justify-center px-4"
+                            className="flex flex-col gap-2 justify-center px-4"
                             key={i}
                           >
                             <div>
                               <h5 className="text-md font-bold text-center text-black">
                                 Karakter {i + 1}
                               </h5>
-                              <input
-                                className="px-2 py-1 rounded-md border text-black h-10"
-                                placeholder="Karakter"
-                                name={`dubber[${i}].name`}
-                                value={values.dubber[i].name}
-                                onChange={handleChange}
-                              />
+                              <div className="flex gap-1">
+                                <input
+                                  className="px-2 py-1 rounded-md border text-black h-10 w-full"
+                                  placeholder="Karakter"
+                                  name={`dubber[${i}].name`}
+                                  value={values.dubber[i].name}
+                                  onChange={(value) =>
+                                    setFieldValue(
+                                      `dubber[${i}].name`,
+                                      value.target.value
+                                    )
+                                  }
+                                  onBlur={() => {
+                                    UpdateTodos(data._id, {
+                                      title: values.title,
+                                      dubber: values.dubber,
+                                    });
+                                  }}
+                                />
+                                <div className="flex flex-col justify-center w-10">
+                                  <input
+                                    className="px-2 py-1 rounded-md border text-black h-10 w-full"
+                                    type="checkbox"
+                                    name="done"
+                                    value="true"
+                                    checked={values.dubber[i].done}
+                                    onChange={(value) =>
+                                      setFieldValue(
+                                        `dubber[${i}].done`,
+                                        value.target.checked
+                                      )
+                                    }
+                                  />
+                                </div>
+                              </div>
                             </div>
                             <div>
                               <h5 className="text-md font-bold text-center text-black">
                                 Dubber {i + 1}
                               </h5>
                               <input
-                                className="px-2 py-1 rounded-md border text-black h-10"
+                                className="px-2 py-1 rounded-md border text-black h-10 w-full"
                                 placeholder="Dubber"
                                 name={`dubber[${i}].voice`}
                                 value={values.dubber[i].voice}
-                                onChange={handleChange}
+                                onChange={(value) =>
+                                  setFieldValue(
+                                    `dubber[${i}].voice`,
+                                    value.target.value
+                                  )
+                                }
+                                onBlur={() => {
+                                  UpdateTodos(data._id, {
+                                    title: values.title,
+                                    dubber: values.dubber,
+                                  });
+                                }}
                               />
                               {/* <select
                                 className="px-2 py-1 rounded-md border text-black h-10"
@@ -191,15 +238,19 @@ function index() {
                           </div>
                         ))}
                         <div className="flex justify-center gap-2">
-                          {characterCount === 1 ? (
+                          {values.dubber.length === 1 ? (
                             ""
                           ) : (
                             <button
                               type="button"
                               className="bg-red-500 uppercase w-[32px] h-[32px] rounded-full hover:bg-red-700 text-center text-xl "
                               onClick={() => {
-                                if (characterCount > 1)
-                                  setCharacterCount(characterCount - 1);
+                                setFieldValue("dubber", [
+                                  ...values.dubber.slice(
+                                    0,
+                                    values.dubber.length - 1
+                                  ),
+                                ]);
                               }}
                             >
                               -
@@ -209,17 +260,41 @@ function index() {
                             type="button"
                             className="bg-green-500 uppercase w-[32px] h-[32px] rounded-full hover:bg-green-700 text-center text-xl "
                             onClick={() => {
-                              if (values.dubber.length < 5) {
-                                setFieldValue("dubber", [
-                                  ...values.dubber,
-                                  { name: "", voice: "" },
-                                ]);
-                                setCharacterCount(characterCount + 1);
-                              }
+                              setFieldValue("dubber", [
+                                ...values.dubber,
+                                {
+                                  name: "",
+                                  voice: "",
+                                  done: false,
+                                },
+                              ]);
                             }}
                           >
                             +
                           </button>
+                        </div>
+                      </div>
+                      <br />
+                      <div className="flex flex-col">
+                        <h5 className="text-2xl font-bold text-center text-black">
+                          Naskah
+                        </h5>
+                        <div className="p-2 text-black">
+                          <CKEditor
+                            editor={ClassicEditor}
+                            onChange={(event, editor) => {
+                              const data = editor.getData();
+                              setFieldValue("script", data);
+                            }}
+                            data={values.script}
+                            onBlur={() => {
+                              UpdateTodos(data._id, {
+                                title: values.title,
+                                dubber: values.dubber,
+                                script: values.script,
+                              });
+                            }}
+                          />
                         </div>
                       </div>
                     </div>
