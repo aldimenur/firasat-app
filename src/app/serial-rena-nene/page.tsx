@@ -1,9 +1,13 @@
 "use client";
 import { Formik } from "formik";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useEffect, useLayoutEffect, useState } from "react";
+import "react-quill/dist/quill.snow.css";
 
 const API_BASE = "http://localhost:5000";
+
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
 function Index() {
   const [form, setForm] = useState([]);
@@ -143,7 +147,7 @@ function Index() {
                               </h5>
                               <div className="flex gap-1">
                                 <input
-                                  className="px-2 py-1 rounded-md border text-black h-10 w-full"
+                                  className="px-2 py-1 rounded-md border text-black w-full"
                                   placeholder="Karakter"
                                   name={`dubber[${i}].name`}
                                   value={values.dubber[i]["name"]}
@@ -182,7 +186,7 @@ function Index() {
                                 Dubber {i + 1}
                               </h5>
                               <input
-                                className="px-2 py-1 rounded-md border text-black h-10 w-full"
+                                className="px-2 py-1 rounded-md border text-black w-full"
                                 placeholder="Dubber"
                                 name={`dubber[${i}].voice`}
                                 value={values.dubber[i]["voice"]}
@@ -259,7 +263,22 @@ function Index() {
                         <h5 className="text-2xl font-bold text-center text-black">
                           Naskah
                         </h5>
-                        <div className="p-2 text-black"></div>
+                        <div className="p-2 text-black">
+                          <ReactQuill
+                            theme="snow"
+                            value={values.script}
+                            onBlur={() => {
+                              UpdateTodos(data["_id"], {
+                                title: values.title,
+                                dubber: values.dubber,
+                                script: values.script,
+                              });
+                            }}
+                            onChange={(value) => {
+                              setFieldValue("script", value);
+                            }}
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
