@@ -73,7 +73,7 @@ function Index() {
         <div className="h-full w-full flex gap-4 overflow-x-scroll ">
           {form.map((data, i) => (
             <div
-              className="min-h-[400px] h-fit lg:min-h-[400px] lg:max-w-[600px] min-w-[100%] lg:min-w-[500px] items-center justify-center bg-white rounded-md"
+              className="min-h-[400px] h-fit lg:min-h-[400px] lg:max-w-[600px] min-w-[100%] lg:min-w-[500px] items-center justify-center bg-white rounded-md mb-4"
               key={i}
             >
               <Formik
