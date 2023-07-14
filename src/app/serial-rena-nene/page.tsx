@@ -78,11 +78,11 @@ function index() {
             >
               <Formik
                 initialValues={{
-                  title: data.title,
-                  description: data.description,
-                  dubber: data.dubber,
-                  enabled: data.enabled,
-                  script: data.script,
+                  title: data["title"],
+                  description: data["description"],
+                  dubber: data["dubber"],
+                  enabled: data["enabled"],
+                  script: data["script"],
                 }}
                 onSubmit={(e) => {}}
               >
@@ -91,7 +91,7 @@ function index() {
                     <div className="flex gap-2 px-2">
                       <button
                         className="bg-red-500 text-white uppercase px-4 py-1 rounded-md hover:bg-red-700"
-                        onClick={() => DeleteTodos(data._id)}
+                        onClick={() => DeleteTodos(data["_id"])}
                       >
                         Hapus
                       </button>
@@ -99,7 +99,7 @@ function index() {
                         type="submit"
                         className="w-full bg-purple-300 text-black uppercase px-4 py-1 rounded-md hover:bg-purple-400"
                         onClick={() => {
-                          UpdateTodos(data._id, {
+                          UpdateTodos(data["_id"], {
                             title: values.title,
                             dubber: values.dubber,
                             script: values.script,
@@ -123,7 +123,7 @@ function index() {
                             setFieldValue("title", value.target.value);
                           }}
                           onBlur={() => {
-                            UpdateTodos(data._id, {
+                            UpdateTodos(data["_id"], {
                               title: values.title,
                             });
                           }}
@@ -136,7 +136,7 @@ function index() {
                         Dubber dan Karakter
                       </h5>
                       <div className="flex flex-col gap-2">
-                        {values.dubber.map((e, i) => (
+                        {Object.keys(values.dubber).map((e: any, i: any) => (
                           <div
                             className="flex flex-col gap-2 justify-center px-4"
                             key={i}
@@ -150,7 +150,7 @@ function index() {
                                   className="px-2 py-1 rounded-md border text-black h-10 w-full"
                                   placeholder="Karakter"
                                   name={`dubber[${i}].name`}
-                                  value={values.dubber[i].name}
+                                  value={values.dubber[i]["name"]}
                                   onChange={(value) =>
                                     setFieldValue(
                                       `dubber[${i}].name`,
@@ -158,7 +158,7 @@ function index() {
                                     )
                                   }
                                   onBlur={() => {
-                                    UpdateTodos(data._id, {
+                                    UpdateTodos(data["_id"], {
                                       title: values.title,
                                       dubber: values.dubber,
                                     });
@@ -170,7 +170,7 @@ function index() {
                                     type="checkbox"
                                     name="done"
                                     value="true"
-                                    checked={values.dubber[i].done}
+                                    checked={values.dubber[i]["done"]}
                                     onChange={(value) =>
                                       setFieldValue(
                                         `dubber[${i}].done`,
@@ -189,7 +189,7 @@ function index() {
                                 className="px-2 py-1 rounded-md border text-black h-10 w-full"
                                 placeholder="Dubber"
                                 name={`dubber[${i}].voice`}
-                                value={values.dubber[i].voice}
+                                value={values.dubber[i]["voice"]}
                                 onChange={(value) =>
                                   setFieldValue(
                                     `dubber[${i}].voice`,
@@ -197,7 +197,7 @@ function index() {
                                   )
                                 }
                                 onBlur={() => {
-                                  UpdateTodos(data._id, {
+                                  UpdateTodos(data["_id"], {
                                     title: values.title,
                                     dubber: values.dubber,
                                   });
@@ -222,7 +222,7 @@ function index() {
                           </div>
                         ))}
                         <div className="flex justify-center gap-2">
-                          {values.dubber.length === 1 ? (
+                          {Object.keys(values.dubber).length === 1 ? (
                             ""
                           ) : (
                             <button
@@ -230,9 +230,9 @@ function index() {
                               className="bg-red-500 uppercase w-[32px] h-[32px] rounded-full hover:bg-red-700 text-center text-xl "
                               onClick={() => {
                                 setFieldValue("dubber", [
-                                  ...values.dubber.slice(
+                                  ...Object.keys(values.dubber).slice(
                                     0,
-                                    values.dubber.length - 1
+                                    Object.keys(values.dubber).length - 1
                                   ),
                                 ]);
                               }}
@@ -272,7 +272,7 @@ function index() {
                             }}
                             data={values.script}
                             onBlur={() => {
-                              UpdateTodos(data._id, {
+                              UpdateTodos(data["_id"], {
                                 title: values.title,
                                 dubber: values.dubber,
                                 script: values.script,
