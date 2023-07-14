@@ -1,15 +1,11 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable react-hooks/rules-of-hooks */
 "use client";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { Formik } from "formik";
 import Link from "next/link";
 import { useEffect, useLayoutEffect, useState } from "react";
 
 const API_BASE = "http://localhost:5000";
 
-function index() {
+function Index() {
   const [form, setForm] = useState([]);
   const [dubber, setDubber] = useState("");
   const [showModal, setShowModal] = useState(false);
@@ -263,23 +259,7 @@ function index() {
                         <h5 className="text-2xl font-bold text-center text-black">
                           Naskah
                         </h5>
-                        <div className="p-2 text-black">
-                          <CKEditor
-                            editor={ClassicEditor}
-                            onChange={(event, editor) => {
-                              const data = editor.getData();
-                              setFieldValue("script", data);
-                            }}
-                            data={values.script}
-                            onBlur={() => {
-                              UpdateTodos(data["_id"], {
-                                title: values.title,
-                                dubber: values.dubber,
-                                script: values.script,
-                              });
-                            }}
-                          />
-                        </div>
+                        <div className="p-2 text-black"></div>
                       </div>
                     </div>
                   </div>
@@ -336,4 +316,4 @@ function index() {
   );
 }
 
-export default index;
+export default Index;
