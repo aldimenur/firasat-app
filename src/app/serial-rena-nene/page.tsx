@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client";
-import QuillEditor from "@/components/quillEditor";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { Formik } from "formik";
@@ -12,30 +11,8 @@ const API_BASE = "http://localhost:5000";
 
 function index() {
   const [form, setForm] = useState([]);
-  const [characterCount, setCharacterCount] = useState(1);
   const [dubber, setDubber] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const [tempData, setTempData] = useState();
-
-  // useLayoutEffect(() => {
-  //   if (sessionStorage.getItem("state")) {
-  //     setCardRow(Number(sessionStorage.getItem("state")));
-  //   } else {
-  //     sessionStorage.setItem("state", cardRow.toString());
-  //   }
-  // }, []);
-
-  // useLayoutEffect(() => {
-  //   setCardJudul(String(sessionStorage.getItem("judul")));
-  // }, []);
-
-  // useEffect(() => {
-  //   sessionStorage.setItem("state", cardRow.toString());
-  // }, [cardRow]);
-
-  useEffect(() => {
-    GetTodos();
-  }, []);
 
   const GetTodos = () => {
     fetch(API_BASE + "/todos")
@@ -43,6 +20,11 @@ function index() {
       .then((data) => setForm(data))
       .catch((err) => console.log(err));
   };
+
+  useEffect(() => {
+    document.title = "Serial Rena Nene";
+    GetTodos();
+  }, []);
 
   const PostTodos = (data: any) => {
     fetch(API_BASE + "/todo/new", {
@@ -91,15 +73,9 @@ function index() {
         <div className="h-full w-full flex gap-4 overflow-x-scroll ">
           {form.map((data, i) => (
             <div
-              className="min-h-[400px] h-fit lg:min-h-[400px] lg:max-w-[300px]  min-w-[100%] lg:min-w-[500px] items-center justify-center bg-white rounded-md"
+              className="min-h-[400px] h-fit lg:min-h-[400px] lg:max-w-[600px] min-w-[100%] lg:min-w-[500px] items-center justify-center bg-white rounded-md"
               key={i}
             >
-              <button
-                className="bg-red-500 text-white uppercase px-4 py-1 rounded-md hover:bg-red-700"
-                onClick={() => DeleteTodos(data._id)}
-              >
-                Hapus
-              </button>
               <Formik
                 initialValues={{
                   title: data.title,
@@ -112,19 +88,27 @@ function index() {
               >
                 {({ values, setFieldValue }) => (
                   <div className="flex flex-col py-2 gap-2">
-                    <button
-                      type="submit"
-                      className="bg-purple-300 text-black uppercase px-4 py-1 rounded-md hover:bg-purple-400"
-                      onClick={() => {
-                        UpdateTodos(data._id, {
-                          title: values.title,
-                          dubber: values.dubber,
-                          script: values.script,
-                        });
-                      }}
-                    >
-                      Simpan
-                    </button>
+                    <div className="flex gap-2 px-2">
+                      <button
+                        className="bg-red-500 text-white uppercase px-4 py-1 rounded-md hover:bg-red-700"
+                        onClick={() => DeleteTodos(data._id)}
+                      >
+                        Hapus
+                      </button>
+                      <button
+                        type="submit"
+                        className="w-full bg-purple-300 text-black uppercase px-4 py-1 rounded-md hover:bg-purple-400"
+                        onClick={() => {
+                          UpdateTodos(data._id, {
+                            title: values.title,
+                            dubber: values.dubber,
+                            script: values.script,
+                          });
+                        }}
+                      >
+                        Simpan
+                      </button>
+                    </div>
                     <div>
                       <h5 className="text-2xl font-bold text-center text-black">
                         Judul
