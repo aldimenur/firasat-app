@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useEffect, useLayoutEffect, useState } from "react";
 import "react-quill/dist/quill.snow.css";
 
-const API_BASE = "http://localhost:5000";
+const API_BASE = "https://firasat-app-api.vercel.app";
 
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
