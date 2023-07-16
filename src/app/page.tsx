@@ -1,7 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect } from "react";
 
 export default function Home() {
+  useEffect(() => {
+    document.title = "Firasat App";
+  }, []);
+
   return (
     <main className="flex min-h-screen flex-col items-center gap-4 p-24">
       <h2 className="text-4xl font-bold text-center">Pilih Channel</h2>
