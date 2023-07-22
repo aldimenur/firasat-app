@@ -13,6 +13,8 @@ function Index() {
   const [form, setForm] = useState([]);
   const [dubber, setDubber] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [isDialog, setIsDialog] = useState(false);
+  const [selectedData, setSelectedData] = useState({} as any);
 
   const GetTodos = () => {
     fetch(API_BASE + "/todos")
@@ -91,7 +93,10 @@ function Index() {
                     <div className="flex gap-2 px-2">
                       <button
                         className="bg-red-500 text-white uppercase px-4 py-1 rounded-md hover:bg-red-700"
-                        onClick={() => DeleteTodos(data["_id"])}
+                        onClick={() => {
+                          setSelectedData(data);
+                          setIsDialog(!isDialog);
+                        }}
                       >
                         Hapus
                       </button>
@@ -295,6 +300,64 @@ function Index() {
             Kembali
           </button>
         </Link>
+        {isDialog ? (
+          <div
+            style={{
+              backgroundColor: "rgba(0,0,0,0.5)",
+              position: "fixed",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              zIndex: 100,
+            }}
+          >
+            <div
+              style={{
+                position: "absolute",
+                float: "left",
+                left: "50%",
+                top: "50%",
+                transform: "translate(-50%, -50%)",
+              }}
+            >
+              <div className="bg-white p-2 rounded-md">
+                <h1 style={{ color: "black" }}>
+                  Apakah anda yakin ingin menghapus{" "}
+                  <span className="font-bold">{selectedData.title}</span>
+                </h1>
+                <br />
+                <div className="flex gap-3 justify-center">
+                  <button
+                    onClick={() => {
+                      DeleteTodos(selectedData["_id"]);
+                      setIsDialog(!isDialog);
+                    }}
+                    style={{
+                      backgroundColor: "red",
+                      padding: "1rem",
+                      borderRadius: "0.5rem",
+                    }}
+                  >
+                    Delete
+                  </button>
+                  <button
+                    onClick={() => setIsDialog(!isDialog)}
+                    style={{
+                      backgroundColor: "blue",
+                      padding: "1rem",
+                      borderRadius: "0.5rem",
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          ""
+        )}
       </main>
       {showModal ? (
         <div className="w-screen h-screen absolute bg-transparent top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  backdrop-blur-sm">
