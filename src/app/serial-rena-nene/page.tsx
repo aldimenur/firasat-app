@@ -62,17 +62,9 @@ function Index() {
 
   return (
     <>
-      <main className="flex min-h-screen flex-col items-center gap-4 lg:p-24 p-4">
+      <main className="flex min-h-screen flex-col items-center gap-4 lg:p-24 py-4">
         <h2 className="text-4xl font-bold text-center">Serial Rena Nene</h2>
-        <div className="flex gap-4">
-          <button
-            className="bg-purple-300 text-black uppercase px-4 py-1 rounded-md hover:bg-purple-400"
-            onClick={() => PostTodos({ title: "Judul Baru" })}
-          >
-            Tambah
-          </button>
-        </div>
-        <div className="h-full w-full flex gap-4 overflow-x-scroll ">
+        <div className="h-full w-full flex gap-2 overflow-x-scroll px-4 text-sm">
           {form.map((data, i) => (
             <div
               className="min-h-[400px] h-fit lg:min-h-[400px] lg:max-w-[600px] min-w-[100%] lg:min-w-[500px] items-center justify-center bg-white rounded-md mb-4"
@@ -291,6 +283,14 @@ function Index() {
               </Formik>
             </div>
           ))}
+          <div className="min-h-[400px] h-fit lg:min-h-[400px] lg:max-w-[600px] min-w-[100%] lg:min-w-[500px] items-center justify-center bg-white rounded-md mb-4">
+            <button
+              className="bg-purple-300 text-black uppercase px-4 py-1 rounded-md hover:bg-purple-400"
+              onClick={() => PostTodos({ title: "Judul Baru" })}
+            >
+              Tambah
+            </button>
+          </div>
         </div>
         <button className="bg-purple-300 text-black uppercase px-4 py-1 rounded-md hover:bg-purple-400">
           Simpan Semua
