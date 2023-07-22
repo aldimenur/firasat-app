@@ -2,10 +2,13 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 "use client";
 import { Formik } from "formik";
+import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useLayoutEffect, useState } from "react";
 
 function index() {
+  const router = useRouter();
   const [cardRow, setCardRow] = useState(1);
   const [cardJudul, setCardJudul] = useState("");
   const [form, setForm] = useState([]);
@@ -213,6 +216,27 @@ function index() {
       ) : (
         ""
       )}
+      <div className="bg-[rgba(0,0,0,0.5)] fixed top-0 left-0 w-full h-full z-10">
+        <div className="w-full h-full flex justify-center items-center">
+          <div className="w-fit h-fit bg-white p-5 rounded-md">
+            <div className="w-full flex flex-col justify-center items-center text-black text-center gap-2">
+              <Image
+                src="/undraw_under_construction_-46-pa.svg"
+                width={300}
+                height={300}
+                alt="Construction"
+              />
+              <span>Masih Dalam Pengembangan</span>
+              <button
+                className="bg-blue-500 rounded-md text-white px-2 py-1  hover:bg-blue-700"
+                onClick={router.back}
+              >
+                Kembali
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
