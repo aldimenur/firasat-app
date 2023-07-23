@@ -17,6 +17,7 @@ function Index() {
   const [showModal, setShowModal] = useState(false);
   const [isDialog, setIsDialog] = useState(false);
   const [selectedData, setSelectedData] = useState({} as any);
+  const [isDone, setIsDone] = useState(false);
 
   const GetTodos = () => {
     fetch(API_BASE + "/todos")
@@ -66,7 +67,7 @@ function Index() {
     <>
       <main className="flex min-h-screen flex-col items-center gap-4 lg:px-10 lg:py-2">
         <Link href={"/"}>
-          <button className="bg-red-500 uppercase px-4 py-1 rounded-md hover:bg-red-800 font-bold absolute top-8 left-10 flex items-center">
+          <button className="bg-red-500 uppercase px-4 py-1 rounded-md hover:bg-red-800 font-bold fixed lg:absolute bottom-2 lg:top-8 left-2 z-10 lg:left-10 flex items-center">
             <Image
               src={"/back-svgrepo-com.svg"}
               width={20}
@@ -81,7 +82,9 @@ function Index() {
             Kembali
           </button>
         </Link>
-        <h2 className="text-4xl font-bold text-center">Serial Rena Nene</h2>
+        <h2 className="text-xl lg:text-4xl font-bold text-center">
+          Serial Rena Nene
+        </h2>
         <div className="h-full w-full flex gap-2 overflow-x-scroll px-4 text-sm">
           {form.map((data, i) => (
             <TaskCard
