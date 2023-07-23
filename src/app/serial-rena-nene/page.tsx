@@ -67,7 +67,7 @@ function Index() {
     <>
       <main className="flex min-h-screen flex-col items-center gap-4 lg:px-10 lg:py-2">
         <Link href={"/"}>
-          <button className="bg-red-500 uppercase px-4 py-1 rounded-md hover:bg-red-800 font-bold fixed lg:absolute bottom-2 lg:top-8 left-2 z-10 lg:left-10 flex items-center">
+          <button className="bg-red-500 uppercase h-fit px-4 py-1 rounded-md hover:bg-red-800 font-bold fixed lg:absolute bottom-2 lg:top-8 left-2 z-10 lg:left-10 flex items-center">
             <Image
               src={"/back-svgrepo-com.svg"}
               width={20}
