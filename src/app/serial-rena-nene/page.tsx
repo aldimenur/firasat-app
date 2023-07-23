@@ -9,7 +9,7 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import "react-quill/dist/quill.snow.css";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 
-const API_BASE = "http://localhost:5000";
+const API_BASE = "http://walrus-app-x8np4.ondigitalocean.app";
 
 function Index() {
   const [form, setForm] = useState([]);
