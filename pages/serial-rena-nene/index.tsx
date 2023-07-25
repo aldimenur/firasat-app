@@ -68,23 +68,25 @@ function Index() {
   return (
     <Fragment>
       <main className="flex min-h-screen flex-col items-center gap-4 lg:px-10 lg:py-2">
-        <button
-          className="bg-red-500 uppercase h-fit px-4 py-1 rounded-md hover:bg-red-800 font-bold fixed lg:absolute bottom-2 lg:top-8 left-2 z-10 lg:left-10 flex items-center"
-          onClick={() => router.push("/")}
-        >
-          <Image
-            src={"/back-svgrepo-com.svg"}
-            width={20}
-            height={20}
-            alt="back"
-            style={{
-              filter: "invert(1)",
-              left: "-5px",
-              position: "relative",
-            }}
-          />
-          Kembali
-        </button>
+        <Link href="/">
+          <button
+            className="bg-red-500 uppercase h-fit px-4 py-1 rounded-md hover:bg-red-800 font-bold fixed lg:absolute bottom-2 lg:top-8 left-2 z-10 lg:left-10 flex items-center"
+            // onClick={() => router.push("/")}
+          >
+            <Image
+              src={"/back-svgrepo-com.svg"}
+              width={20}
+              height={20}
+              alt="back"
+              style={{
+                filter: "invert(1)",
+                left: "-5px",
+                position: "relative",
+              }}
+            />
+            Kembali
+          </button>
+        </Link>
         <h2 className="text-xl lg:text-4xl font-bold text-center">
           Serial Rena Nene
         </h2>

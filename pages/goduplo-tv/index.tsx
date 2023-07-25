@@ -163,12 +163,14 @@ function index() {
         <button className="bg-purple-300 text-black uppercase px-4 py-1 rounded-md hover:bg-purple-400">
           Simpan Semua
         </button>
-        <button
-          className="bg-red-500 uppercase px-4 py-1 rounded-md hover:bg-red-800 font-bold"
-          onClick={() => router.push("/")}
-        >
-          Kembali
-        </button>
+        <Link href={`/`}>
+          <button
+            className="bg-red-500 uppercase px-4 py-1 rounded-md hover:bg-red-800 font-bold"
+            // onClick={() => router.push("/")}
+          >
+            Kembali
+          </button>
+        </Link>
       </main>
       {showModal ? (
         <div className="w-screen h-screen absolute bg-transparent top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  backdrop-blur-sm">

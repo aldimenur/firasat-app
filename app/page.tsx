@@ -17,16 +17,20 @@ export default function Home() {
       <div className="flex gap-4">
         <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          onClick={() => router.push("/goduplo-tv")}
+          onClick={() => router.push("https://firasat-app.web.app/goduplo-tv/")}
         >
           GoDuplo TV
         </button>
-        <button
-          className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"
-          onClick={() => router.push("/serial-rena-nene")}
-        >
-          Serial Rena Nene
-        </button>
+        <Link href="https://firasat-app.web.app/serial-rena-nene/">
+          <button
+            className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"
+            // onClick={() =>
+            //   router.replace("https://firasat-app.web.app/serial-rena-nene")
+            // }
+          >
+            Serial Rena Nene
+          </button>
+        </Link>
       </div>
     </main>
   );
