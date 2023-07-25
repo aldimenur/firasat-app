@@ -1,13 +1,13 @@
-"use client";
-import Modal from "@/components/Modal";
-import TaskCard from "@/components/TaskCard";
+import Modal from "../../components/Modal";
+import TaskCard from "../../components/TaskCard";
 import { Formik } from "formik";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { Fragment, useEffect, useLayoutEffect, useState } from "react";
 import "react-quill/dist/quill.snow.css";
 const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+import "../../app/globals.css";
 
 const API_BASE = "https://walrus-app-x8np4.ondigitalocean.app";
 
@@ -64,7 +64,7 @@ function Index() {
   };
 
   return (
-    <>
+    <Fragment>
       <main className="flex min-h-screen flex-col items-center gap-4 lg:px-10 lg:py-2">
         <Link href={"/"}>
           <button className="bg-red-500 uppercase h-fit px-4 py-1 rounded-md hover:bg-red-800 font-bold fixed lg:absolute bottom-2 lg:top-8 left-2 z-10 lg:left-10 flex items-center">
@@ -120,7 +120,7 @@ function Index() {
           />
         ) : null}
       </main>
-    </>
+    </Fragment>
   );
 }
 

@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
-"use client";
 import { Formik } from "formik";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useLayoutEffect, useState } from "react";
+import "../../app/globals.css";
 
 function index() {
   const router = useRouter();
@@ -15,18 +15,6 @@ function index() {
   const [characterCount, setCharacterCount] = useState(1);
   const [dubber, setDubber] = useState("");
   const [showModal, setShowModal] = useState(false);
-
-  useLayoutEffect(() => {
-    if (sessionStorage.getItem("state")) {
-      setCardRow(Number(sessionStorage.getItem("state")));
-    } else {
-      sessionStorage.setItem("state", cardRow.toString());
-    }
-  }, []);
-
-  useLayoutEffect(() => {
-    setCardJudul(String(sessionStorage.getItem("judul")));
-  }, []);
 
   useEffect(() => {
     sessionStorage.setItem("state", cardRow.toString());
